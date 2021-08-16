@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template,  redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db,  connect_db, Department, Employee, get_directory, get_directory_join, get_directory_join_class, get_directory_all_join, Project, EmployeeProject
+from forms import AddSnackForm
 
 app = Flask(__name__)
 
@@ -19,3 +20,10 @@ def list_phones():
     """Renders directory of employees and phone numbers (from dept)"""
     emps = Employee.query.all()
     return render_template('phones.html', emps=emps)
+
+
+@app.route("/snacks/new")
+def add_snack():
+    form = AddSnackForm()
+
+    return render_template("add_snack_form.html", form=form)
