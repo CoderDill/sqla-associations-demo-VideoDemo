@@ -22,8 +22,14 @@ def list_phones():
     return render_template('phones.html', emps=emps)
 
 
-@app.route("/snacks/new")
+@app.route("/snacks/new", methods=["GET", "POST"])
 def add_snack():
     form = AddSnackForm()
 
-    return render_template("add_snack_form.html", form=form)
+    if form.validate_on_submit():
+        name = form.name.data
+        price = form.price.data
+        flash(f"Created {name} with price {price}")
+        return redirect("/phones")
+    else:
+        return render_template("add_snack_form.html", form=form)
