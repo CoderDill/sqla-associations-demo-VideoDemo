@@ -38,7 +38,8 @@ def add_snack():
 @app.route("/employees/new", methods=["GET", "POST"])
 def add_employee():
     form = NewEmployeeForm()
-
+    depts = db.session.query(Department.dept_code, Department.dept_name)
+    form.dept_code.choices = depts
     if form.validate_on_submit():
         name = form.name.data
         state = form.state.data
